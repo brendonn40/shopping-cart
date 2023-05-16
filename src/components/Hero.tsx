@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 import { createStyles, Overlay, Container, Title, Button, Text, rem } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
@@ -61,7 +62,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function HeroContentLeft() {
+export default function HeroContentLeft() {
   const { classes } = useStyles();
 
   return (

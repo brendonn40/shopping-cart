@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { useState } from 'react';
 import {
   createStyles,
@@ -8,6 +9,7 @@ import {
   Paper,
   Transition,
   rem,
+  Image,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantine/ds';
@@ -101,8 +103,7 @@ export function HeaderResponsive() {
       key={link.label}
       to={link.link}
       className={cx(classes.link, { [classes.linkActive]: active === link.link })}
-      onClick={(event) => {
-        event.preventDefault();
+      onClick={() => {
         setActive(link.link);
         close();
       }}
