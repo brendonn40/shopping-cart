@@ -53,7 +53,7 @@ export default function FeaturesCard({
 }: {
   image: string;
   model: string;
-  discount?: number;
+  discount: number;
   price:number
 }) {
   const { classes } = useStyles();
@@ -74,7 +74,7 @@ export default function FeaturesCard({
         <div>
           <Text fw={500}>{model}</Text>
           <Text fz="xs" c="dimmed">
-            Free recharge at any station
+            Frete grátis para todo brasil
           </Text>
         </div>
         {discount ? (<Badge variant="outline">{`${discount}% off`}</Badge>) : null}
@@ -93,16 +93,19 @@ export default function FeaturesCard({
       <Card.Section className={classes.section}>
         <Group spacing={30}>
           <div>
+            <Text fz='sm' fw={700} sx={{ lineHeight: 1, textDecoration: 'line-through' }} color='grey'>
+              R${(price * (1 + (discount / 100))).toFixed(2)}
+            </Text>
             <Text fz="xl" fw={700} sx={{ lineHeight: 1 }}>
-              R${price}
+              R${price.toFixed(2)}
             </Text>
             {/* <Text fz="sm" c="dimmed" fw={500} sx={{ lineHeight: 1 }} mt={3}>
               per day
             </Text> */}
           </div>
 
-          <Button radius="xl" style={{ flex: 1 }}>
-            Rent now
+          <Button radius="xl" style={{ flex: 1 }} variant='outline'>
+            Adicionar ao carrinho
           </Button>
         </Group>
       </Card.Section>
