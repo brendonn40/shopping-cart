@@ -1,18 +1,17 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import App from "./App";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Shop from "./pages/shop";
 
-const RouteSwitch = () => {
+function RouteSwitch() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
-};
+}
 
 export default RouteSwitch;

@@ -29,6 +29,14 @@ module.exports = {
    "eol-last":"off",
    "jsx-quotes":"off",
    "react/require-default-props":"off",
-   "react/jsx-one-expression-per-line":"off"
+   "react/jsx-one-expression-per-line":"off",
+   "jsx-a11y/control-has-associated-label":"off",
+   "@typescript-eslint/no-explicit-any": "off",
+   "@typescript-eslint/quotes":"off",
+   "@typescript-eslint/no-unused-vars":"off",
+   "@typescript-eslint/keyword-spacing": "off",
+   "@typescript-eslint/object-curly-spacing": "off",
+   "@typescript-eslint/comma-spacing": "off",
+   "no-else-return":"off"
   },
 };

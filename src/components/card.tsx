@@ -38,73 +38,67 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const mockdata = [
-  { label: '4 passengers', icon: IconUsers },
-  { label: '100 km/h in 4 seconds', icon: IconGauge },
-  { label: 'Automatic gearbox', icon: IconManualGearbox },
-  { label: 'Electric', icon: IconGasStation },
-];
-
+interface Laptop {
+  image:string;
+  model:string;
+  discount:number;
+  price:number;
+}
 export default function FeaturesCard({
-  image,
-  model,
-  discount,
-  price,
+  item,
+  setCart,
+  cart,
 }: {
-  image: string;
-  model: string;
-  discount: number;
-  price:number
+  item:Laptop;
+  setCart:(v:any)=> void;
+  cart:any[];
 }) {
   const { classes } = useStyles();
-  const features = mockdata.map((feature) => (
-    <Center key={feature.label}>
-      <feature.icon size="1.05rem" className={classes.icon} stroke={1.5} />
-      <Text size="xs">{feature.label}</Text>
-    </Center>
-  ));
 
+  const handleAdd = (i:any) => {
+    setCart((currItems:any) => {
+      if (currItems.find((ite:any) => ite.model === i.model) === undefined) {
+        return [...currItems, { model: i.model, quantity: 1 }];
+      }else{
+        return currItems.map((it:any) => {
+          if(it.model === i.model) {
+            return {...it,quantity: it.quantity + 1};
+          }else{
+            return it;
+          }
+        });
+      }
+    });
+  };
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section className={classes.imageSection}>
-        <Image src={image} alt={model} maw={250}/>
+        <Image src={item.image} alt={item.model} maw={250}/>
       </Card.Section>
 
       <Group position="apart" mt="md">
         <div>
-          <Text fw={500}>{model}</Text>
+          <Text fw={500}>{item.model}</Text>
           <Text fz="xs" c="dimmed">
             Frete grátis para todo brasil
           </Text>
         </div>
-        {discount ? (<Badge variant="outline">{`${discount}% off`}</Badge>) : null}
+        {item.discount ? (<Badge variant="outline">{`${item.discount}% off`}</Badge>) : null}
       </Group>
-
-      {/* <Card.Section className={classes.section} mt="md">
-        <Text fz="sm" c="dimmed" className={classes.label}>
-          Basic configuration
-        </Text>
-
-        <Group spacing={8} mb={-8}>
-          {features}
-        </Group>
-      </Card.Section> */}
 
       <Card.Section className={classes.section}>
         <Group spacing={30}>
           <div>
             <Text fz='sm' fw={700} sx={{ lineHeight: 1, textDecoration: 'line-through' }} color='grey'>
-              R${(price * (1 + (discount / 100))).toFixed(2)}
+              R${(item.price * (1 + (item.discount / 100))).toFixed(2)}
             </Text>
             <Text fz="xl" fw={700} sx={{ lineHeight: 1 }}>
-              R${price.toFixed(2)}
+              R${item.price.toFixed(2)}
             </Text>
-            {/* <Text fz="sm" c="dimmed" fw={500} sx={{ lineHeight: 1 }} mt={3}>
-              per day
-            </Text> */}
+
           </div>
 
-          <Button radius="xl" style={{ flex: 1 }} variant='outline'>
+          <Button radius="xl" style={{ flex: 1 }} variant='outline' onClick={() => handleAdd(item)}>
             Adicionar ao carrinho
           </Button>
         </Group>

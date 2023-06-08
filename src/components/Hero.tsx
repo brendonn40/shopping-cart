@@ -79,11 +79,11 @@ export default function HeroContentLeft() {
           incríveis! Aqui, desvendamos os segredos dos heróis da tecnologia e oferecemos a você as
           ferramentas necessárias para alcançar a grandeza digital.
         </Text>
-        <a href="/shop">
+        {/* <a href="/shop">
           <Button variant="gradient" size="xl" radius="xl" className={classes.control}>
             Loja
           </Button>
-        </a>
+        </a> */}
       </Container>
     </div>
   );

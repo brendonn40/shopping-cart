@@ -1,6 +1,7 @@
 import { Button, SimpleGrid } from '@mantine/core';
 import { HeaderResponsive } from '../../components/Header';
 import FeaturesCard from '../../components/card';
+import { useState } from 'react';
 
 function Shop() {
   const laptops = [
@@ -49,17 +50,20 @@ function Shop() {
       price: 4200,
     },
   ];
+  const [cart, setCart] = useState<any[]>([]);
+  console.log('cart', cart);
+  const total = cart.reduce((acc, curr) => acc + curr.quantity,0);
+  console.log('total',total);
   return (
     <>
-      <HeaderResponsive />
+      <HeaderResponsive total={total} />
       <SimpleGrid cols={3}>
         {laptops.map((laptop) => (
           <FeaturesCard
             key={laptop.model}
-            image={laptop.image}
-            model={laptop.model}
-            discount={laptop.discount}
-            price={laptop.price}
+            item={laptop}
+            setCart={setCart}
+            cart={cart}
           />
         ))}
       </SimpleGrid>

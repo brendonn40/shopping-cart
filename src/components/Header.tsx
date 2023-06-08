@@ -10,10 +10,15 @@ import {
   Transition,
   rem,
   Image,
+  Button,
+  Drawer,
+  Text,
+  Flex,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantine/ds';
 import { Link } from 'react-router-dom';
+import shopping_cart from '../shopping-cart.svg';
 
 const HEADER_HEIGHT = rem(60);
 
@@ -93,8 +98,9 @@ const links = [
   { link: '/', label: 'Home' },
   { link: '/shop', label: 'Shop' },
 ];
-export function HeaderResponsive() {
+export function HeaderResponsive({ total = 0 }: { total?: number }) {
   const [opened, { toggle, close }] = useDisclosure(false);
+  const [openedDrawer, { open: openDrawer, close: closeDrawer }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
 
@@ -114,12 +120,26 @@ export function HeaderResponsive() {
 
   return (
     <Header height={HEADER_HEIGHT} mb={120} className={classes.root}>
+      <Drawer
+        opened={openedDrawer}
+        onClose={closeDrawer}
+        position='right'
+        title="Carrinho de compras"
+        overlayProps={{ opacity: 0.5, blur: 4 }}
+      >
+        teste
+      </Drawer>
       <Container className={classes.header}>
         <MantineLogo size={28} />
         <Group spacing={5} className={classes.links}>
           {items}
         </Group>
-
+        <Flex align="center">
+          <button type="button" onClick={openDrawer}>
+            <Image src={shopping_cart} maw={60} />
+          </button>
+          <Text size={30}>{total}</Text>
+        </Flex>
         <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" />
 
         <Transition transition="pop-top-right" duration={200} mounted={opened}>
