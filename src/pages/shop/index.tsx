@@ -51,12 +51,9 @@ function Shop() {
     },
   ];
   const [cart, setCart] = useState<any[]>([]);
-  console.log('cart', cart);
-  const total = cart.reduce((acc, curr) => acc + curr.quantity,0);
-  console.log('total',total);
   return (
     <>
-      <HeaderResponsive total={total} />
+      <HeaderResponsive cart={cart}/>
       <SimpleGrid cols={3}>
         {laptops.map((laptop) => (
           <FeaturesCard

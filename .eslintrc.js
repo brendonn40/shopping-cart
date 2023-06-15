@@ -37,6 +37,7 @@ module.exports = {
    "@typescript-eslint/keyword-spacing": "off",
    "@typescript-eslint/object-curly-spacing": "off",
    "@typescript-eslint/comma-spacing": "off",
-   "no-else-return":"off"
+   "no-else-return":"off",
+   "no-param-reassign":"off"
   },
 };

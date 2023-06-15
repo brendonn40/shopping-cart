@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   createStyles,
   Header,
@@ -14,6 +14,8 @@ import {
   Drawer,
   Text,
   Flex,
+  Box,
+  Stack,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantine/ds';
@@ -98,12 +100,12 @@ const links = [
   { link: '/', label: 'Home' },
   { link: '/shop', label: 'Shop' },
 ];
-export function HeaderResponsive({ total = 0 }: { total?: number }) {
+export function HeaderResponsive({ total = 0,cart }: { total?: number, cart?:any }) {
   const [opened, { toggle, close }] = useDisclosure(false);
   const [openedDrawer, { open: openDrawer, close: closeDrawer }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
-
+  const [counter,setCounter] = useState(0);
   const items = links.map((link) => (
     <Link
       key={link.label}
@@ -118,6 +120,21 @@ export function HeaderResponsive({ total = 0 }: { total?: number }) {
     </Link>
   ));
 
+  const add = (id:string) => {
+    const index = cart.findIndex((item:any) => item.model === id);
+    cart[index].quantity += 1;
+    setCounter(counter + 1);
+  };
+  const remove = (id:string) => {
+    const index = cart.findIndex((item:any) => item.model === id);
+    if(cart[index].quantity > 1) {
+      cart[index].quantity -= 1;
+      setCounter(counter + 1);
+    }else{
+      cart.splice(index,1);
+      setCounter(counter + 1);
+    }
+  };
   return (
     <Header height={HEADER_HEIGHT} mb={120} className={classes.root}>
       <Drawer
@@ -127,7 +144,21 @@ export function HeaderResponsive({ total = 0 }: { total?: number }) {
         title="Carrinho de compras"
         overlayProps={{ opacity: 0.5, blur: 4 }}
       >
-        teste
+        {cart?.map((item:any) => (
+          <Flex key={item.id} align='center'>
+            <Image src={item.image} maw={120}/>
+            <Stack>
+            <Text >{item.model}</Text>
+            <Text weight='bold'>R${item.price}</Text>
+            <Flex gap={`md`}>
+            <Button onClick={() => remove(item.model)} compact>-</Button>
+            <Text>{item.quantity}</Text>
+            <Button onClick={() => add(item.model)} compact>+</Button>
+            </Flex>
+            </Stack>
+          </Flex>
+        ))}
+        Total:R${cart?.reduce((acc:any,curr:any) => acc + curr.quantity * curr.price,0)}
       </Drawer>
       <Container className={classes.header}>
         <MantineLogo size={28} />
@@ -138,7 +169,7 @@ export function HeaderResponsive({ total = 0 }: { total?: number }) {
           <button type="button" onClick={openDrawer}>
             <Image src={shopping_cart} maw={60} />
           </button>
-          <Text size={30}>{total}</Text>
+          <Text size={30}>{cart.reduce((acc:any, curr:any) => acc + curr.quantity,0)}</Text>
         </Flex>
         <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" />
 

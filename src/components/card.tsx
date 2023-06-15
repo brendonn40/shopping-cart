@@ -58,7 +58,7 @@ export default function FeaturesCard({
   const handleAdd = (i:any) => {
     setCart((currItems:any) => {
       if (currItems.find((ite:any) => ite.model === i.model) === undefined) {
-        return [...currItems, { model: i.model, quantity: 1 }];
+        return [...currItems, { model: i.model, image: i.image, price: i.price,quantity: 1 }];
       }else{
         return currItems.map((it:any) => {
           if(it.model === i.model) {
